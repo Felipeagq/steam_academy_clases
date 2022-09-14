@@ -1,12 +1,29 @@
 # STEAM ACADEMY CLASES
-## 1 INTRODUCCIÓN A LA WEB
-1. clase donde cada estudiante tenga que buscar un tema y explicarlo.
-2. montar un pequeño servidor en vivo que reciba los metodos HTTPS:
-    - Muestra en AWS.
-    - Enseñarles la estructura general del JSON.
-    - BackEnd en Python.
-    - Introducción a comandos cmd y git.
-## 2 COMANDOS GENERALES
-## 3 GIT:
-    - introducción a git y creación de cuenta en GitHub.
-    - Comandos de git y MarkDown.
+
+## Semana 1
+### Algoritmia
+---
+## Semana 2
+### 1. INTRODUCCIÓN A LA WEB.
+- Sacar los temas importantes y que ellos averiguen durante 10 minutos y luego socialicen lo investigado.
+
+### 2. CHARLA DE SERVIDOR EN VIVO.
+- Ponerlos a descargar un servidor de Python con el proposito de:
+  - Conocer como es el despliegue de un servidor.
+  - Los primeros pasos en git.
+  - Como funciona un JSON.
+  - LocalHost.
+
+### 3. CMD Y TERMINAL
+- Comandos de exploración de archivos.
+- Manipulación de archivos
+- WildCards/Expresiones Regulares
+---
+## Semana 3
+### 1 CMD Y TERMINAL
+
+### INSTALACIÓN Y CONFIGURACIÓN VSCode
+
+## Examen de validación de primer modulo.
+
+### Git/GitHub
