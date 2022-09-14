@@ -126,9 +126,7 @@ Con el podemos imprimir el contenido de un archivo o concatenar varios archivos.
 ### ¿El standart input se usa constantemente en la terminal?
 
 No.
-###¿Qué símbolo debemos usar para el Pipe Operator?
-
-|
+### ¿Qué símbolo debemos usar para el Pipe Operator?
 ### ¿podemos usar más de 2 comandos con el Pipe Operator?
 
 Si.
