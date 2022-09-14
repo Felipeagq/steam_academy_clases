@@ -1,6 +1,26 @@
 
 # Introducción al internet
 # Clase 1
+# indice
+- Historia del internet.
+- Lenguaje binario.
+- Bits y bytes.
+- Codigo ASCII.
+- UniCode
+- RGB
+- Que es el internet.
+- Protocolos.
+- Modelo OSI
+- Protocolo TCP.
+- ISP
+- DNS
+- W3C
+- Metodos HTTP.
+- Que es el HTML, CSS y JAVASCRIPT.
+- DOM
+- CSSOM
+-Layout
+
 ## Historia de la computación.
 ![](./imagenes_1/historia.png)
 ![](./imagenes_1/historia2.png)
@@ -222,6 +242,9 @@ Todas páginas web están formadas por html, css y Javascript e independienement
 ![](imagenes_1/critialpath.png)
 
 **El DOM**
+
+https://www.youtube.com/watch?v=jgU3Wn0Txec
+
 Es el árbol de nodos que representa los contenidos de la página o aplicación web. Estos contenidos están determinados por el HTML y, aunque se parezca bastante al DOM, no són lo mismo.
 
 ¿Cómo se genera el árbol DOM?
