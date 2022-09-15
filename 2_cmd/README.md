@@ -4,6 +4,7 @@ tags: cmd,bash,STEAM,clases
 # Comandos CMD
 # Clase 2
 ### Exploración y movimiento en la terminal.
+- ````whiami````
 -  ````ls````
 -  ````ls -R```` : busqueda recursiva de archivos.
 -  ````rm -rf [directory]```` : eliminar de forma "recursiva" y "force".
@@ -42,7 +43,7 @@ HTML
 - ````cp [origen] [destino]```` : copiar archivos.
 - ````mv [origin] [destino]```` : mover un archivo, tambien puede renombrar los archivos.
 - ````head [file] -n [lineas]```` : muestras las primeras [lineas] de un archivo.
-- ````cat [file]```` : visualizar todo el archivo.
+- ````cat [file] [file] [file]```` : visualizar todo el archivo.
 - ````tail [file] -n [lineas]```` : muestra las ultimas [lineas] de un archivo.
 - ````less [file]```` : ver el contenido de un archivo de forma interactiva, se sale con la "q", nos permite buscar un con ````/[palabra]````.
 - ````explorer.exe .```` : para abrir el explorador grafico de archivos.
@@ -59,11 +60,6 @@ man [comando]
 ```
 
 
-## Imagenes
--  ![](http://localhost:10001/uploads/54c07e6e-0482-47cd-a044-59e60f7e1576.png)
--  ![](http://localhost:10001/uploads/9149f1bb-26aa-4376-99f2-536ea0b334c5.png)
--  ![](http://localhost:10001/uploads/f0b45953-baad-46be-953f-f1e8f0182166.png)
--  -  ![](http://localhost:10001/uploads/e7fb77ae-1fdb-4f35-9408-18e10944b9ed.png)
 
 ## **Comando "Start" en windows:**
     - https://norfipc.com/comandos/como-usar-comando-start-windows-aplicaciones-practicas.php
@@ -101,56 +97,104 @@ man [comando]
 
 ## PipeOperator
 💡Los filtros son el procesos de tomar una entrada de flujo y, realizando una conversión, es mandado a la salida de otro stream.
-.
-### Definición
-Un pipeline sirve en la construcción de comandos para generar filtros.
-.
-### Pipeline stdout a stdin
-Usamos el operado pipe | entre dos comando para direccionar el stdout del primero con el stdin del segundo. Cualquier comando, entre pipes, puede tener opciones o argumentos para construir filtros complejos.
+Hace que la salida de uno sea la entrada de otro comando ````|````.
+ejemplos:
+- ````ls | grep <texto>````
+- ````Command 1 | command 2 | command 3 ````
+- ````ls -lh | sort | cat````
 
-Una de las ventajas de los pipes, en Linux y UNIX, es de que pueden variar y generar salidas intermedias de diferentes procesos, generando todo un trace de flujo de información.
+## Operadores de control
+Son símbolos reservados por la terminal que nos permiten ejecutar varios comandos seguidos, e incluso agregar condicionales ⛓️.
+- Síncronos: Se corre uno detrás de otro, en orden. Se hace esto con ````;```` , por ejemplo```` ls; mkdir carpeta1````
+- Asíncrono: Por cada comando, se abre una nueva terminal, y cada comando se corre de manera paralela, esto es con ````&````, por ejemplo ````ls & date & mkdir carpeta```` ⏲️
+- Condicionales: Podemos agregar lógica a como se corren los comandos:
 
-### ¿Para qué nos sirve el Pipe Operator?
+    - AND: Si se cumple un comando, entonces se ejecuta el siguiente, se usa ````&&````, un ejemplo es ````mkdir carpeta1 && cd carpeta1 && echo "Si se pudo"```` . Si no se puede ejecutar el primer comando, no se ejecuta el siguiente. 🚆
+    - OR: Se ejecuta el primer comando que se pueda ejecutar, y se usa ````||````, por ejemplo ````cd carpeta || echo "No hay carpeta"````, el comando siguiente funciona si el comando anterior da con error.
 
-Nos permite ejecutar un comando en el que su standart output pase a ser un standart input de otro comando.
-¿Qué funciones nos brinda usar Pipe Operator?
-o Hacer filtros, encadenamientos o funcionalidades que pueden terminar en un archivo.
 
-### ¿Para qué nos sirve el comando echo?
+## Variables de entorno
+- para ver las variables de entorno
+````printenv````
+- ````export HOLA="Hola chicos"````
+- ````$HOLA````
 
-Para imprimir un standart output en la terminal de cualquier mensaje que escribamos entre comillas:
-echo “Hola Platzinautas!”
-### ¿Para qué nos sirve el comando cat?
+### Crearlas
+1. a la altura del usuario creamos el archivo ````cat > .bashrc````.
+2. Ingresamos los alias ````alias [ALIAS]=[COMANDO]````
+3. cargamos al sistema ````source .bashrc````
+4. se creará por defecto un ````.bash_profile````
 
-Con el podemos imprimir el contenido de un archivo o concatenar varios archivos.
-### ¿El standart input se usa constantemente en la terminal?
 
-No.
-### ¿Qué símbolo debemos usar para el Pipe Operator?
-### ¿podemos usar más de 2 comandos con el Pipe Operator?
+## Comandos de busqueda 
 
-Si.
-### ¿Para qué nos sirve el comando tee?
+### Banderas del comando find
+Banderas básicas:
 
-Nos permite crear un archivo que pasa el standart output de un comando incluido el Pipe Operator.
-### ¿Para qué nos sirve el comando sort?
+- ````-name````: Realiza una búsqueda por nombre de archivo.
+- ``-iname``: Realiza una búsqueda por nombre de archivo sin tomar en cuenta las mayúsculas o minúsculas.
+- ``-type``: Realiza una búsqueda por tipo de archivo, f(files) y d(directories) que son los más comunes.
+- ``-size``: Realiza una búsqueda por el tamaño de archivo y/o directorio.
+Banderas de tiempo⏰
 
-Para ordenar el contenido de un archivo.
-### ¿Cómo puedo instalar cowsay?
+- ``-mmin``: Búsqueda por tiempo en minutos.
+- ``-mtime``: Búsqueda por tiempo en días.
+Más banderas👀
 
-Con el comando sudo apt-get install cowsay.
-### ¿En caso de que me salga un error de instalación invalida que debo hacer?
+- ``-maxdepth``: Después de está bandera se pone el número de niveles de profundidad en los que queremos realizar la búsqueda
+- ``-empty``: Realiza una búsqueda de archivos y/o directorios vacíos.
+- ``-perm``: Búsqueda de archivos por permisos.
+- ``-not``: Retorna los resultados que no coinciden con la búsqueda.
+- ``-delete``: Está bandera se coloca al final del comando, eliminara los resultados de la busqueda(⚠️Hay que tener mucho cuidado al usarla).
 
-Actualizar nuestro sistema operativo con los comandos:
-sudo apt-get update.
-sudo apt-apt upgrade.
-¿Qué hace el comando cowsay?
+Comandos de búsqueda
 
-Nos permite imprimir un diseño de vaca con el mensaje que le hallamos escrito al comando:
-Cowsay “Hola Dolly”
-### ¿Para qué nos sirve el comando lolcat?
+- Es una de las partes mas interesantes de la terminal, ya que nos permite buscar archivos de manera eficiente y específica 💫.
+- which <programa> Busca en todas las rutas del PATH para encontrar donde está alojado algún archivo binario 🔢.
+- find <ruta inicial> -name <archivo> Nos permite encontrar un archivo a partir de una ruta inicial, y dentro de todas las carpetas que surjan de ese inicio 🌲.
+- Algo muy cool es que podemos usar wildcards para hacer mas eficiente la búsqueda 🔍.
+- ``find <ruta inicial> -type <tipo> -name <nombre>`` podemos especificar el tipo de archivo, d → directorio, f → documento.
+- ````find <ruta inicial> -size <tamaño><unidad> ````podemos buscar tamaños mayores a un determinado tamaño, por ejemplo, de 20M (megas).
+- Solución al reto:```` find ./ -name *.txt -type f -size 1M > mis_archivos_texto.txt | echo "archivos guardadados exitosamente"````
 
-Para imprimir por consola un mensaje con la letra de un color diferente cada vez que ejecutemos el comando.
-### ¿Qué pasa si queremos guardar un mensaje creado con el comando cowsay y usando el Pipe Operator con lolcat en un archivo usando el comando tee?
+### Ejemplos
 
-Lo único que guardaremos es el mensaje sin la particularidad del color que nos brinda el comando lolcat. Esto pasa porque no se pasa el standart de manera adecuada el standart output.
+````
+Búsqueda de archivos vacíos a partir del directorio actual.
+find . -type f -empty
+
+Buscar todos los archivos de tipo directorio de profundidad 2
+find ./ -maxdepth 2 -type d 
+
+find ./ -maxdepth 2 -name *.txt
+
+find ./ -maxdepth 2 -type d -name Doc*
+
+````
+
+
+
+## Premisos
+|Atributo|	Tipo de archivo|
+|--|--|
+|-|	Es un archivo normal, como un documento de texto, una foto, un video, etc.
+|d|	Por directory es un directorio
+|l|	Es un enlace simbólico. Es algo que veremos en próximas clases
+|b|	Bloque especial, son archivos que manejan información para el sistema, como la información de un disco duro
+
+|Símbolo|Significado	|Permiso|
+|--|--|--|
+|r|	readable|	Significa que puede leer su contenido
+|w|	writable|	El usuario puede editar el contenido del archivo, también el nombre y los permisos
+|x|	executable|	El usuario puede ejecutarlo en caso de que sea un pr
+
+![](./imagenes/permisos.png)
+![](./imagenes/permisos_2.png)
+![](./imagenes/permisos_3.png)
+![](./imagenes/permisos4.png)
+![](./imagenes/permisos5.png)
+
+### Ejemplo
+- ````chmod [PERMISOS] [FILE/DIRECTORY]````
+- ````chmod [simboloDelUsuario][operador][permiso] [archivoParaCambiarSusPermisos]````
+- ````chmod u-x,go=x [file]````
