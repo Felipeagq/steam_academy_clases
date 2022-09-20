@@ -103,6 +103,61 @@ ejemplos:
 - ````Command 1 | command 2 | command 3 ````
 - ````ls -lh | sort | cat````
 
+## Grep
+````grep```` nos permite hacer filtrado de información.
+La forma generica de escribir grep es 
+
+````grep [ExpresiónRegular] [archivoDondeBuscar]````
+
+Pero tambien se puede hacer con PipeOperator
+
+````ls -all | grep [ExpresiónRegular]````
+
+### Ignorar case sensitive (-i)
+Puede que queramos buscar la palabra “Action” pero eso dará exclusivamente las coincidencias con la “A” mayúscula. Esto lo podemos ignorar con la opción -i, que buscará independientemente de si la letra “A” es mayúscula o minúscula.
+
+````grep -i Action movies.csv````
+
+### Contar ocurrencias (-c)
+Si quieres saber cuántas veces se repite una palabra, usa la opción `-c seguida de la palabra que quieres buscar.
+
+````grep -c Drama movies.csv````
+
+### Excluir una expresión (-v)
+Para saber cuáles son los resultados que NO coinciden con tu expresión regular, usas la opción -v.
+
+Por ejemplo, si queremos contar todas las películas que no son de drama, escribimos:
+
+````grep -cv Drama movies.csv````
+
+
+### Limitar la búsqueda (-m)
+Para no buscar en todo el archivo, sino las primeras ocurrencias, podemos limitar la búsqueda en líneas con la opción -m seguida del número de líneas que queremos encontrar.
+
+Por ejemplo, si queremos buscar las primeras 10 líneas que concuerden con la palabra “Fan” escribimos:
+
+````grep -m 10 Fan movies.csv````
+
+
+|Opción|	Función|
+|--|--|
+|-m	|Limita las líneas de la búsqueda|
+|-c	|Cuenta las ocurrencias|
+|-v	|Excluye las ocurrencias|
+|-i|	Ignora él case sensitive|
+
+## wc 
+conteo de palabras en un archivo ````wc [archivp]```` da una salida de 4 banderas.
+
+````[#lineass] [#caracteres] [#bits] [nombre_file]````
+
+|Opción|	Función|
+|--|--|
+|-l	|las líneas del archivo|
+|-w	|numero de palabras|
+|-c	|numeros de bits|
+
+
 ## Operadores de control
 Son símbolos reservados por la terminal que nos permiten ejecutar varios comandos seguidos, e incluso agregar condicionales ⛓️.
 - Síncronos: Se corre uno detrás de otro, en orden. Se hace esto con ````;```` , por ejemplo```` ls; mkdir carpeta1````
@@ -198,3 +253,178 @@ find ./ -maxdepth 2 -type d -name Doc*
 - ````chmod [PERMISOS] [FILE/DIRECTORY]````
 - ````chmod [simboloDelUsuario][operador][permiso] [archivoParaCambiarSusPermisos]````
 - ````chmod u-x,go=x [file]````
+
+## Utilidades de red
+$ ````ifconfig / ipconfig```` // sirve para ver la mascara de red, puerto de transmisión, tarjeta de red, etc
+
+$ ````ping```` // nos muestra si una ip o pagina, esta activa, si salen paquetes es porque hay conexión.
+
+Para evitar el ciclo “infinito” de ````ping````, es posible usar la flag/opción ````-c```` junto al número de envíos que se quieren hacer:
+````ping -c 4 www.google.com````
+
+Especificar el tamaño de los paquetes (-s)
+Para probar la conectividad con paquetes de diferentes tamaños se utiliza la opción -s seguido del tamaño del paquete que desees usar. El tamaño debe ser en bytes.
+
+Para hacer pruebas con paquetes de 20 bytes escribimos:
+
+````ping -s 20 www.google.com````
+
+$ ````curl [pagina_web]````  // podemos traer el html de una pagina, podríamos guardarlo con el estándar output.
+
+$ ````wget [pagina_web]```` (linux) // nos descarga el archivo html, pero con formato.
+
+$ ````traceroute [pagina_web]```` (linux) // nos sirve para ver por cuales computadoras tenemos que ir pasando para llegar por ejemplo a una pagina web. Ejemplo, nos saldrán las ip que tenemos que pasar para llegar a la pagina que queremos.
+
+$ ````netstat –i```` // nos muestra los dispositivos de red.
+
+
+$ ````nc -zv endpoint port````
+Existe un comando que se puede usar para verificar el acceso a un puerto desde una máquina
+
+## Comprimiendo archivos
+
+````tar [opciones] [nombreDelArchivoComprimido] [archivoAComprimir]````
+
+### comprimir (-c)
+Para comprimir un archivo utilizamos la opción ````-c````. En todos los casos hay que usar la opción ````-f```` para indicar que estamos comprimiendo o descomprimiendo archivos.
+
+### Ver lo que está haciendo el comando (-v)
+Si queremos ver lo que el comando está comprimiendo a medida que se va ejecutando, usamos la opción ````-v````. Por cierto la opción -v es de “Verbose” y muchos comandos la usan, también te la puedes encontrar como ````--verbose````.
+
+````tar -cvf compressed.tar Documents/toCompress/````
+
+### Comprimir con formato “.tar.gz” (-z)
+El formato “.tar.gz” o también “.tgz” es una versión extendida del formato tradicional de compresión “.zip” que puede manejar y comprimir archivos más grandes.
+
+Para manejar la compresión de archivos “.tar.gz” o “.tgz” se usa la opción ````-z```` además de tener que especificar en el nombre de archivo la extensión que quieres usar.
+
+````tar -czvf compressed.tar.gz Documents/toCompress/````
+
+### Descomprimir (-x)
+Para descomprimir es mucho más sencillo, solo hay que especificar la opción -x y el archivo comprimido que se quiere descomprimir.
+
+Si se quiere descomprimir un archivo de extensión “.tar.gz” o “.tgz” hay que especificar la opción -z también.
+
+````tar -xzvf compressed.tar.gz````
+
+#### Comprimiendo archivos .zip
+Para comprimir usamos el comando zip con el nombre que quieres que tenga y lo que quieres comprimir.
+
+Si quieres comprimir una carpeta con archivos dentro, tienes que especificar la opción -r de “recursive”.
+
+````zip -r copressed.zip Documents/toCompress/````
+
+Y para descomprimir es incluso más fácil, solo escribe el comando unzip seguido de lo que quieres descomprimir.
+
+````unzip compressed.zip````
+
+
+|Opción	|Función|
+|--|--|
+|c|	Comprimir
+|x|	Descomprimir
+|z|	Especifica que lo que se va a comprimir o descomprimir tiene extensión “.tar.gz” o “.tgz”
+|v|	Muestra lo que está comprimiendo o descomprimiendo
+
+## Manejo de procesos
+
+|Comando|	Función|
+|--|--|
+|ps|	Muestra una tabla con los procesos que se están ejecutando
+|top|	Muestra una interfaz con los procesos que se están ejecutando más los recursos que consumen información adicional
+|kill|	Mata el proceso que le indiques
+
+
+- Les recomiendo ````htop```` tiene una interfaz mucho más amigable, lo pueden descargar con: ````sudo apt install htop```` y para entrar al programa solo utilizan el comando htop
+
+```
+Quienes usan WSL: RECUERDA que estos comandos que nos enseño el profesor, nos mostrará solo lo que tenemos en UBUNTU, no más. Es decir no nos mostrará los procesos que estemos haciendo en Windows, porque Windows no se lo permite, cuando nos encontremos en un sistema Linux si lo hará. 😃 😃
+```
+
+$ ````pkill -nombre````
+
+Acabas con el proceso usando el nombre en lugar del id. pkill firefox
+También puedes usar
+
+$ ````killall -nombre_del_proceso````
+
+Cuando se traba nuestro OS, normalmente terminamos procesos con el administrador de tareas 😆, en la terminal se puede hacer, pero es un poco diferente.
+$ ````ps```` nos muestra los procesos que están corriendo actualmente. Cada proceso tiene un PID. Podemos ver los procesos que estén en el background (por ejemplo, CAT).
+$````kill <PID>```` nos ayuda a terminar procesos fuera de nuestra terminal. 🛑
+$ ````top <PID>```` nos muestra los procesos que están usando más recursos de nuestra computadora. Podemos filtrar los procesos (para ver como, usamos bandera h → help). 🆘
+La terminal, sabiéndola usar bien, es más eficiente que el administrador de tareas.
+$````htop```` es como top pero con esteroides. Debemos instalarlo. Tiene muchas más opciones 💪🏽
+
+```
+ps ax, para ver los procesos del sistema.
+
+top muestra los proceso en tiempo real
+
+kill -9 pid, para terminar el proceso inmediatamente.
+
+killall -9 proceso, para terminar el proceso.
+```
+
+## Procesos en foreground y background
+
+
+### ejercicio:
+- cat > mi_nota.txt
+- CTRL+Z
+- jobs
+- fg 1
+
+### Otras formas de enviar al background
+- Existen otras formas de enviar comandos al background. La primera es usando el operador de control```` &````  al final de un comando. Este operador nos permite enviar de manera directa un proceso al background una vez ejecutado. Por ejemplo: ````cat > mi_nota.txt &````
+
+- Existen otras formas de enviar comandos al background. La primera es usando el operador de control & al final de un comando. Este operador nos permite enviar de manera directa un proceso al background una vez ejecutado. Por ejemplo: ````bg 1````
+
+#### otro
+¿Cómo manejar procesos?
+Diferencia entre ````Ctrl + C```` y ````Ctrl + Z````
+````Ctrl + C```` Lo que hace es que finaliza o mata un proceso.
+````Ctrl + Z```` Lo que hace es que pausa o suspende un proceso con lo que después lo podremos volver a llamar con el comando ````fg foreground (primer plano)```` o con el comando```` bg background (segundo plano)````
+Y un ejemplo muy sencillo que les servirá para controlar procesos es el siguiente:
+.
+Crear un listado recursivo (Que liste todos los archivos y directorios)
+Para eso seguimos los sigueintes pasos:
+
+1.  Primero hacemos el comando cd / para dirigirnos a la raíz de nuestro sistema.
+2. Después ejecutamos el comando ls -R y comenzará a listar TODO lo que existe dentro de nuestro S.O.
+3. Ahora lo que hacermos será confirmar lo aprendido, utilizamos Ctrl + C y veremos que se cancela el proceso, pero lo interesante viene cuando hacemos lo siguiente 😄
+4. Ahora ejecutamos el mismo comando para listar TODO, ls -R y lo detenemos con Ctrl + Z a lo que nos saldrá lo siguiente: [Número del proceso] + Id del proceso + En donde se detuvo el proceso
+Y se verá algo como esto:```` [1] + 40751 suspended (signal) ls --color=tty -R````
+Y repetiremos el paso 4 otras 3 veces (Ustedes confíen 😄)
+Ahora si ejecutamos el comando jobs nos mostrará todos los procesos suspendidos y si tenemos ejecutando alguno en segundo plano.
+Imgur
+Para volver a activar algún proceso podemos hacerlo con el comando fg %Número del proceso
+Por ejemplo en bash con fg %1 y en zsh con fg %1 para volver a correr el primer proceso que suspendimos, y ahora le damos Crl + C para ahora sí matarlo, ahora el proceso 1 ya no existirá al ejecutar jobs pero el 2, 3 y 4 ahí seguirán 😄
+
+Esto es muy importante para cuando queremos manejar diferentes procesos, por ejemplo con el comando ````sleep 10000 &```` podrá un proceso en segundo plano, entonces no lo podremos ver, pero nos marca el Número del proceso entre los ````[]```` también lo podemos ver con ````jobs```` junto con su número de proceso, si lo queremos traer a primer plano lo podemos hacer con el comando fg %1 por ejemplo y de ahí ya cancelarlo o suspenderlo, o una manera más rápida, solo ejecutar el comando ````kill %Número del proceso```` por ejemplo: con el mismo ejemplo de sleep 10000 & si nos da el [1] lo podremos terminar con ````kill 1```` o ````kill %1```` y nos saldrá algo como ````[1] + 41723 terminated sleep 10000```` y ahora ya saber como manejar y exterminar todos los procesos como terminator 🤖
+.
+.
+Diferencia entre ````Ctrl + L```` y ````clear````
+````Ctrl + L```` Lo que hace es que manda para arriba lo que está impreso en la terminal, dejándola a simple vista limpia, pero en realidad lo puedes regresar a eso que esta impreso ahí.
+
+````clear```` Lo que hace es que limpia la terminal, y todo lo que estaba impreso en la terminal.
+
+## Editores de texto en la terminal
+
+Una de las utilidades más importantes de la terminal es el editor de texto. Hay diferentes opciones, pero Vim es uno de los más sencillos y populares. También está Emacs y Nano 🤔. Veamos con más detalle el uso de Vim.
+
+````vim [nombre del archivo]````
+- Por defecto no podrás escribir hasta que actives el modo de inserción. Para hacerlo usa la tecla i.
+
+- Para salir del modo de inserción presiona la tecla escape. En el modo normal (en el que no puedes escribir) si escribes el slash / activarás un buscador similar al del comando less.
+- Para borrar una línea, estando el modo normal, tienes que ubicarte sobre ella y presionar dd.
+- Para guardar y salir presiona estando en el modo normal, activa los comandos usando : y escribe “wq”. La letra “w” es para guardar y la letra “q” es para salir, también los puedes usar por separado.
+
+|Comando|	Función|
+|--|--|
+|vim|	Abre el archivo especificado. Si no existe lo crea
+|:q|	Cierra el editor
+|:w|	Guarda los cambios
+|/búsqueda]|	Busca dentro del texto
+|dd|	En el modo normal, selecciona una línea y la borra
+
+- Si quieres practicar VIM en tu misma Terminal, ejecuta el siguiente programa que ya viene incorporado.````vimtutor````
