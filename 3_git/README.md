@@ -93,4 +93,4 @@ El comando **````git show````** nos muestra los cambios que han existido sobre u
 
 Si queremos ver la diferencia entre una versión y otra, no necesariamente todos los cambios desde la creación del archivo, podemos usar el comando **````git diff commitA commitB````**.
 
-Recuerda que puedes obtener el ID de tus commits con el comando **````git log````**.
+Recuerda que puedes obtener el ID de tus commits con el comando **````g````**.
